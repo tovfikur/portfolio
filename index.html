@@ -1,0 +1,721 @@
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <script id="dataslayerLaunchMonitors">
+console.log('** dataslayer: injecting Launch monitors **');
+window._satellite = window._satellite || {};
+window._satellite._monitors = window._satellite._monitors || [];
+window._satellite._monitors.push({
+  ruleTriggered: function(e) {
+    window.parent.postMessage(
+      {
+        type: 'dataslayer_launchruletriggered',
+        url: window == window.parent ? window.location.href : 'iframe',
+        data: JSON.parse(JSON.stringify(e.rule)),
+      },
+      '*'
+    );
+  },
+  ruleCompleted: function(e) {
+    // console.log('** dataslayer: Launch rule completed **', e.rule);
+    var rule = JSON.parse(JSON.stringify(e.rule));
+    var sendRule = function() {
+        if (window.dataslayer) {
+            window.parent.postMessage(
+                {
+                    type: 'dataslayer_launchrulecompleted',
+                    url: window == window.parent ? window.location.href : 'iframe',
+                    data: rule,
+                },
+                '*'
+            );       
+            // console.log('** dataslayer: posted rule '+rule+'**'); 
+        } else {
+            if (document.readyState === 'complete') {
+                // console.log('** dataslayer: giving up on launch **');
+                window._dataslayerQueue = window._dataslayerQueue || [];
+                window._dataslayerQueue.push({
+                  type: 'dataslayer_launchrulecompleted',
+                  url: window == window.parent ? window.location.href : 'iframe',
+                  data: rule,
+                });
+                return;
+            } else {
+                // console.log('** dataslayer: waiting 250ms to repost rule **');
+                window.setTimeout(sendRule, 250);
+            }
+        }
+    }
+    sendRule();
+    if (
+      window._satellite &&
+      window._satellite._container &&
+      window._satellite._container.dataElements
+    ) {
+      var elementNames = Object.keys(
+        window._satellite._container.dataElements
+      ).sort(function(a, b) {
+        var nameA = a.toUpperCase();
+        var nameB = b.toUpperCase();
+
+        if (nameA < nameB) {
+          return -1;
+        } else if (nameA > nameB) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+
+      let launchElements = {};
+
+      for (var i = 0; i < elementNames.length; i++) {
+        var newElement = JSON.parse(
+          JSON.stringify(
+            window._satellite._container.dataElements[elementNames[i]]
+          )
+        );
+  
+        let cleanValue = window._satellite.getVar(elementNames[i]);
+        if (typeof cleanValue === 'function') {
+          cleanValue = '(function)';
+        } else if (
+          typeof cleanValue === 'object' &&
+          typeof cleanValue.then === 'function'
+        ) {
+          cleanValue = '(Promise)';
+        }
+        launchElements[elementNames[i]] = cleanValue;
+        // launchElements.push({
+        //   key: elementNames[i],
+        //   value: cleanValue,
+        //   element: newElement,
+        // });
+      }
+      try {
+        window.parent.postMessage(
+          {
+            type: 'dataslayer_launchdataelements',
+            data: 'found',
+            url: window == window.parent ? window.location.href : 'iframe',
+            elements: launchElements
+          },
+          '*'
+        );
+      } catch (e) {
+        console.warn(e);
+      }
+  
+    }
+  },
+  ruleConditionFailed: function(e) {
+    window.parent.postMessage(
+      {
+        type: 'dataslayer_launchrulefailed',
+        url: window == window.parent ? window.location.href : 'iframe',
+        data: JSON.parse(JSON.stringify(e.rule)),
+      },
+      '*'
+    );
+  },
+});
+</script></head><body cz-shortcut-listen="true"><met #aeb3b8et="utf-8"> </met>
+        <title>Tovfikur Rahman - One of the best Software Engineer and Web Developer</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="Free Website Template" name="keywords">
+        <meta content="Free Website Template" name="description">
+        <!-- Favicon -->
+        <link href="http://127.0.0.1:8000/static/favicon.ico" rel="icon">
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com/">
+        <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+        <link href="./file/css2.css" rel="stylesheet">
+        <!-- Icon Font Stylesheet -->
+        <link href="./file/all.min.css" rel="stylesheet">
+        <link href="./file/bootstrap-icons.css" rel="stylesheet">
+        <!-- Libraries Stylesheet -->
+        <link href="./file/owl.carousel.min.css" rel="stylesheet">
+        <link href="./file/lightbox.min.css" rel="stylesheet">
+        <link href="./file/animate.min.css" rel="stylesheet">
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="./file/bootstrap.min.css" rel="stylesheet">
+        <!-- Template Stylesheet -->
+        <link href="./file/style.css" rel="stylesheet">
+    
+    
+        <!-- Spinner Start -->         
+        <div id="spinner" class="bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center"> 
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status"> <span class="sr-only">Loading...</span> 
+            </div>             
+        </div>         
+        <!-- Spinner End -->         
+        <div class="container"> 
+            <div class="row g-5"> 
+                <div class="col-lg-4 sticky-lg-top vh-100"> 
+                    <div class="d-flex flex-column h-100 text-center overflow-auto shadow">
+                        <button style="background: transparent;  border: unset;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#page2Modal">
+                            <img class="w-100 img-fluid mb-4" src="./file/profile.jpg" alt="Image">
+                        </button>                         
+                        <h1 class="text-primary mt-2">Tovfikur R.</h1> 
+                        <div class="mb-4" style="height: 22px;"> 
+                            <h4 class="typed-text-output d-inline-block text-light">Full-Stack Developer</h4><span class="typed-cursor">|</span>
+                            <span class="typed-cursor"></span>
+                            <div class="typed-text d-none">Web Designer, Web Developer, Front End Developer, Full-Stack Developer, Software Developer</div>                             
+                        </div>                         
+                        <div class="d-flex justify-content-center mt-auto mb-3"> <a class="btn btn-secondary btn-square mx-1" href="https://github.com/tovfikur"><i class="fa-github fab"></i></a> <a class="btn btn-secondary btn-square mx-1" href="https://www.facebook.com/tovfikur"><i class="fab fa-facebook-f"></i></a> <a class="btn btn-secondary btn-square mx-1" href="https://github.com/tovfikur"><i class="fab fa-linkedin-in"></i></a> <a class="btn btn-secondary btn-square mx-1" href="https://www.instagram.com/tovfikur"><i class="fab fa-instagram"></i></a> 
+                        </div>                         
+                        <div class="d-flex align-items-end justify-content-between border-top"> 
+</div>                         
+                    </div>                     
+                </div>                 
+                <div class="col-lg-8"> 
+                    <!-- About Start -->                     
+                    <section class="py-5 border-bottom wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;"> 
+                        <h1 class="title pb-3 mb-5">About Me</h1> 
+                        <p>I am Tovfikur Rahman, a passionate software 
+engineer and full-stack web developer with a strong track record of 
+leading and collaborating in dynamic teams. My diverse experience has 
+equipped me with the skills and knowledge to tackle complex technical 
+challenges and deliver innovative solutions. I am driven by a constant 
+desire to learn and grow, readily embracing new technologies and 
+methodologies to stay ahead of the curve.</p> 
+                        <div class="row mb-4"> 
+                            <div class="col-sm-6 py-1">
+                                <span class="fw-medium text-primary">Name:</span>&nbsp;Tovfiur Rahman
+                            </div>                             
+                            <div class="col-sm-6 py-1"><span class="fw-medium text-primary">Birthday:</span> 19 April 1998
+                            </div>                             
+                            <div class="col-sm-6 py-1"><span class="fw-medium text-primary">Degree:</span> Diploma
+                            </div>                             
+                            <div class="col-sm-6 py-1"> <span class="fw-medium text-primary">Experience:</span> 10 Years
+                            </div>                             
+                            <div class="col-sm-6 py-1"><span class="fw-medium text-primary">Phone:</span> +88 017 966 933 00
+                            </div>                             
+                            <div class="col-sm-6 py-1"><span class="fw-medium text-primary">Email:</span> tovfikur@gmail.com
+                            </div>                             
+                            <div class="col-sm-6 py-1"><span class="fw-medium text-primary">Address:</span>&nbsp;R 17, South Banasree, Dhaka
+                            </div>                             
+                            <div class="col-sm-6 py-1"> <span class="fw-medium text-primary">Freelance:</span> Available
+                            </div>                             
+                        </div>                         
+                        <div class="row g-4"> 
+                            <div class="col-md-4 col-lg-6 col-xl-4"> 
+                                <div class="d-flex bg-secondary p-4"> 
+                                    <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">5</h1> 
+                                    <div class="ps-3"> 
+                                        <p class="mb-0">Years of</p> 
+                                        <h5 class="mb-0">Experience</h5> 
+                                    </div>                                     
+                                </div>                                 
+                            </div>                             
+                            <div class="col-md-4 col-lg-6 col-xl-4"> 
+                                <div class="d-flex bg-secondary p-4"> 
+                                    <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">2</h1>
+                                    <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">0</h1> 
+                                    <div class="ps-3"> 
+                                        <p class="mb-0">Complete</p> 
+                                        <h5 class="mb-0">Projects</h5> 
+                                    </div>                                     
+                                </div>                                 
+                            </div>
+                            <div class="col-md-4 col-lg-6 col-xl-4"> 
+                                <div class="d-flex bg-secondary p-4"> 
+                                    <h1 class="flex-shrink-0 display-5 text-primary mb-0" data-toggle="counter-up">3</h1> 
+                                    <div class="ps-3"> 
+                                        <p class="mb-0">Lead</p> 
+                                        <h5 class="mb-0">Teams</h5> 
+                                    </div>                                     
+                                </div>                                 
+                            </div>                             
+                        </div>                         
+                    </section>                     
+                    <!-- About End -->                     
+                    <!-- Skills Start -->                     
+                    <section class="py-5 border-bottom wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;"> 
+                        <h1 class="title pb-3 mb-5">Skills</h1>
+                        <div class="row"> 
+                            <div class="col-sm-6"> 
+                                <div class="skill mb-4"> 
+                                    <div class="d-flex justify-content-between"> 
+                                        <p class="mb-2">Leadership</p> 
+                                        <p class="mb-2">50%</p> 
+                                    </div>                                     
+                                    <div class="progress"> 
+                                        <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;"></div>                                         
+                                    </div>                                     
+                                </div>                                 
+                                <div class="skill mb-4"> 
+                                    <div class="d-flex justify-content-between"> 
+                                        <p class="mb-2">Strategy</p> 
+                                        <p class="mb-2">50%</p> 
+                                    </div>                                     
+                                    <div class="progress"> 
+                                        <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;"></div>                                         
+                                    </div>                                     
+                                </div>                                 
+                                <div class="skill mb-4"> 
+                                    <div class="d-flex justify-content-between"> 
+                                        <p class="mb-2">Business Analysis</p> 
+                                        <p class="mb-2">60%</p> 
+                                    </div>                                     
+                                    <div class="progress"> 
+                                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>                                         
+                                    </div>                                     
+                                </div>                                 
+                                <div class="skill mb-4"> 
+                                    <div class="d-flex justify-content-between"> 
+                                        <p class="mb-2">Full-Stack Development (Django)</p> 
+                                        <p class="mb-2">95%</p> 
+                                    </div>                                     
+                                    <div class="progress"> 
+                                        <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width: 95%;"></div>                                         
+                                    </div>                                     
+                                </div>                                 
+                                <div class="skill mb-4"> 
+                                    <div class="d-flex justify-content-between"> 
+                                        <p class="mb-2">Python 3.X, PHP(OOP), C++(Qt4)</p> 
+                                        <p class="mb-2">85%</p> 
+                                    </div>                                     
+                                    <div class="progress"> 
+                                        <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 85%;"></div>                                         
+                                    </div>                                     
+                                </div>                                 
+                                <div class="skill mb-4"> 
+                                    <div class="d-flex justify-content-between"> 
+                                        <p class="mb-2">Rest Framework</p> 
+                                        <p class="mb-2">90%</p> 
+                                    </div>                                     
+                                    <div class="progress"> 
+                                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;"></div>                                         
+                                    </div>                                     
+                                </div>
+                            </div>
+                            <div class="col-sm-6"> 
+                                <div class="skill mb-4"> 
+                                    <div class="d-flex justify-content-between"> 
+                                        <p class="mb-2">Online Business Generation</p> 
+                                        <p class="mb-2">80%</p> 
+                                    </div>                                     
+                                    <div class="progress"> 
+                                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"></div>                                         
+                                    </div>
+                                </div>                                 
+                                <div class="skill mb-4"> 
+                                    <div class="d-flex justify-content-between"> 
+                                        <p class="mb-2">New Business Generation</p> 
+                                        <p class="mb-2">80%</p> 
+                                    </div>                                     
+                                    <div class="progress"> 
+                                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"></div>                                         
+                                    </div>                                     
+                                </div>                                 
+                                <div class="skill mb-4"> 
+                                    <div class="d-flex justify-content-between"> 
+                                        <p class="mb-2">Communication</p> 
+                                        <p class="mb-2">85%</p> 
+                                    </div>                                     
+                                    <div class="progress"> 
+                                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 85%;"></div>                                         
+                                    </div>                                     
+                                </div>                                 
+                                <div class="skill mb-4"> 
+                                    <div class="d-flex justify-content-between"> 
+                                        <p class="mb-2">MySql, Sqlite, SQL (Django ORM)</p> 
+                                        <p class="mb-2">90%</p> 
+                                    </div>                                     
+                                    <div class="progress"> 
+                                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;"></div>                                         
+                                    </div>
+                                </div>                                 
+                                <div class="skill mb-4"> 
+                                    <div class="d-flex justify-content-between"> 
+                                        <p class="mb-2">Javascript, JQuery, Ajax, HTML, CSS</p> 
+                                        <p class="mb-2">90%</p> 
+                                    </div>                                     
+                                    <div class="progress"> 
+                                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;"></div>                                         
+                                    </div>                                     
+                                </div>                                 
+                                <div class="skill mb-4"> 
+                                    <div class="d-flex justify-content-between"> 
+                                        <p class="mb-2">MS Office&nbsp; / Google Office Suite</p> 
+                                        <p class="mb-2">85%</p> 
+                                    </div>                                     
+                                    <div class="progress"> 
+                                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 85%;"></div>                                         
+                                    </div>                                     
+                                </div>                                 
+                            </div>                             
+                        </div>
+                        <small>**The progress bar determines my confidence level**</small> 
+                    </section>                     
+                    <!-- Skills End -->                     
+                    <!-- Expericence Start -->                     
+                    <section class="py-5 wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;"> 
+                        <h1 class="title pb-3 mb-5">Expericence</h1> 
+                        <div class="border-start border-2 border-light pt-2 ps-5"> 
+                            <div class="position-relative mb-4"> <span class="bi fa-arrow-right fs-4 text-light position-absolute" style="top: -5px; left: -50px;"></span> 
+                                <h5 class="mb-1">Tradedata Ltd. ( Micmine )</h5> 
+                                <p class="mb-2">IT Leader (Team Leader) | <small>Aug, 2023 - Feb, 2024</small></p> 
+                                <p>I held the position of <big><b>IT Leader (Team Leader)</b></big>.
+ In this role, I led a team in the development of e-commerce systems, 
+marketing tool integrations, and advanced tracking solutions. 
+Additionally, I played a pivotal role in launching Micmine from the 
+ground up. This experience honed my leadership skills and demonstrated 
+my ability to spearhead complex projects from inception to completion.</p> 
+                            </div>                             
+                            <div class="position-relative mb-4"> <span class="bi fa-arrow-right fs-4 text-light position-absolute" style="top: -5px; left: -50px;"></span> 
+                                <h5 class="mb-1">DNS Software</h5> 
+                                <p class="mb-2">Senior Software Engineer | <small>Dec, 2022 - Aug, 2023 <br> ( Continue as support not full time employee )</small></p> 
+                                <p>I contributed to diverse projects, including developing the <big><b>International Top-up system</b></big>, a <big><b>cow face detection system</b></big>, and the <big><b>Insurance system (Bima)</b></big>. This experience broadened my skillset and allowed me to tackle complex challenges across various domains.</p> 
+                            </div>                             
+                            <div class="position-relative mb-4"> <span class="bi fa-arrow-right fs-4 text-light position-absolute" style="top: -5px; left: -50px;"></span> 
+                                <h5 class="mb-1">Instasure ( DNS Software )</h5> 
+                                <p class="mb-2">Programmer | <small>Dec, 2022 - Aug, 2023</small></p> 
+                                <p>I contributed to projects like, <big><b>Insurance system (Bima)</b></big>. This experience broadened my skillset and allowed me to tackle complex challenges across various domains.</p> 
+                            </div>                             
+                            <div class="position-relative mb-4"> <span class="bi fa-arrow-right fs-4 text-light position-absolute" style="top: -5px; left: -50px;"></span> 
+                                <h5 class="mb-1">The Turtles Turn</h5> 
+                                <p class="mb-2">Software Engineer | <small>May,2022 - Nov,2022</small></p> 
+                                <p>My role involved building and deploying <big><b>e-commerce software, website</b></big> and <big><b>customer tracking systems</b></big>
+ for various clients. This experience allowed me to contribute to their 
+success by providing them with customizable and effective digital 
+solutions.</p> 
+                            </div>                             
+                            <div class="position-relative mb-4"> <span class="bi fa-arrow-right fs-4 text-light position-absolute" style="top: -5px; left: -50px;"></span> 
+                                <h5 class="mb-1">ItKarigor</h5> 
+                                <p class="mb-2">IT Specialist | <small>May,2021 - Jul,2022</small></p> 
+                                <p>Built and customized user-centric IT products, boosting customer experience.</p> 
+                            </div>                             
+                            <div class="position-relative mb-4"> <span class="bi fa-arrow-right fs-4 text-light position-absolute" style="top: -5px; left: -50px;"></span> 
+                                <h5 class="mb-1">TuitionWanted.Com </h5> 
+                                <p class="mb-2">IT Specialist | <small>2021 - 2022</small></p> 
+                                <p> I honed my software development 
+skills as a developer from 2019 to 2020. During my time there, I played a
+ key role in streamlining client interactions by developing a robust <big><b>Customer Relationship Management (CRM)</b></big> system. Additionally, I contributed to enhancing operational efficiency by implementing <big><b>automation solutions</b></big> and built <big><b>data mining tools</b></big>, which empowered informed decision-making through valuable insights.</p> 
+                            </div>                             
+                            <div class="position-relative mb-4"> <span class="bi fa-arrow-right fs-4 text-light position-absolute" style="top: -5px; left: -50px;"></span> 
+                                <h5 class="mb-1">RayBim Tech</h5> 
+                                <p class="mb-2">Software Developer | <small>2019 - 2020</small></p> 
+                                <p>Built and customized user-centric IT products, boosting customer experience.</p> 
+                            </div>                             
+                            <div class="position-relative mb-4"> <span class="bi fa-arrow-right fs-4 text-light position-absolute" style="top: -5px; left: -50px;"></span> 
+                                <h5 class="mb-1">Certified Ethical Hacking</h5> 
+                                <p class="mb-2">IBCS-PRIMAX Software Ltd. | <small>Jan,2018 - Aug,2018</small></p> 
+                                <p>Certified Ethical Hacker at 
+IBCS-PRIMAX Software Ltd. (Jan-Aug 2018) honed my cybersecurity skills, 
+allowing me to ethically identify and defend against system 
+vulnerabilities.</p> 
+                            </div>                             
+                            <div class="position-relative mb-4"> <span class="bi fa-arrow-right fs-4 text-light position-absolute" style="top: -5px; left: -50px;"></span> 
+                                <h5 class="mb-1">Computer Science</h5> 
+                                <p class="mb-2">Feni Computer Institute | <small>2014 - 2018</small></p> 
+                                <p>One of the best government's ICT based institute for diploma in engineering courses in Bangladesh</p> 
+                            </div>                             
+                        </div>                         
+                    </section>                     
+                    <!-- Expericence End -->                     
+                    <!-- Subscribe Start -->                     
+                    <section class="wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;"> 
+</section>                     
+                    <!-- Subscribe End -->                     
+                    <!-- Services Start -->                     
+                    <section class="py-5 border-bottom wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;"> 
+                        <h1 class="title pb-3 mb-5">Services</h1> 
+                        <div class="row g-4"> 
+                            <div class="col-md-6"> 
+                                <div class="service-item"> <i class="fa fa-2x fa-globe mb-4 mx-auto"></i> 
+                                    <h5 class="mb-2">Custom Website</h5> 
+                                    <p class="mb-0">I excel in crafting 
+user-friendly, secure, and innovative web solutions. My diverse skillset
+ and passion for optimizing for user experience make me a perfect fit 
+for your project.</p> 
+                                </div>                                 
+                            </div>                             
+                            <div class="col-md-6"> 
+                                <div class="service-item"> <i class="fa-shop fa fa-2x mb-4 mx-auto"></i> 
+                                    <h5 class="mb-2">E-Com Website</h5> 
+                                    <p class="mb-0">I excel in crafting 
+user-friendly, secure, and conversion-focused e-commerce solutions. My 
+diverse skillset and passion for optimizing user experience make me a 
+perfect fit for your online store.</p> 
+                                </div>                                 
+                            </div>                             
+                            <div class="col-md-6"> 
+                                <div class="service-item"> <i class="fa-tools fa fa-2x mb-4 mx-auto"></i> 
+                                    <h5 class="mb-2">Complex Program</h5> 
+                                    <p class="mb-0">I excel in crafting 
+efficient, reliable, and scalable software solutions. My diverse 
+skillset and passion for optimizing performance make me a perfect fit 
+for your project.</p> 
+                                </div>                                 
+                            </div>                             
+                            <div class="col-md-6"> 
+                                <div class="service-item"> <i class="fa fa-2x fa-network-wired mb-4 mx-auto"></i> 
+                                    <h5 class="mb-2">API</h5> 
+                                    <p class="mb-0">I excel in crafting 
+robust, secure, and well-documented APIs that seamlessly integrate with 
+your existing systems. My passion for clean code and efficient design 
+ensures high-quality solutions.</p> 
+                                </div>                                 
+                            </div>                             
+                        </div>                         
+                    </section>                     
+                    <!-- Services End -->                     
+                    <!-- Portfolio Start -->                     
+                    <section class="py-5 border-bottom wow fadeInUp" data-wow-delay="0.1s" style="visibility: hidden; animation-delay: 0.1s; animation-name: none;"> 
+                        <h1 class="title pb-3 mb-5">Portfolio</h1> 
+                        <div class="row"> 
+                            <div class="col-12"> 
+                                <div class="row"> 
+                                    <div class="col-12 text-center mb-2"> 
+                                        <ul class="list-inline mb-4" id="portfolio-flters"> 
+                                            <li class="btn btn-secondary active" data-filter="*">
+                                                <i class="fa fa-star me-2"></i>All
+                                            </li>                                             
+                                            <li class="btn btn-secondary" data-filter=".first">
+                                                <i class="fa fa-laptop-code me-2"></i>Design
+                                            </li>                                             
+                                            <li class="btn btn-secondary" data-filter=".second">
+                                                <i class="fa fa-mobile-alt me-2"></i>Development
+                                            </li>                                             
+                                        </ul>                                         
+                                    </div>                                     
+                                </div>                                 
+                                <div class="row portfolio-container" style="position: relative; height: 682.183px;"> 
+                                    <div class="col-md-6 first mb-4 portfolio-item second" style="position: absolute; left: 0px; top: 0px;"> 
+                                        <div class="position-relative overflow-hidden mb-2"> 
+                                            <img class="img-fluid w-100" src="./file/portfolio-1.jpg" alt="">
+                                            <div class="portfolio-btn d-flex align-items-center justify-content-center"> <a href="http://127.0.0.1:8000/static/img/portfolio-1.jpg" data-lightbox="portfolio"> <i class="bi fa-plus text-light"></i> </a>
+                                            </div>                                             
+                                        </div>                                         
+                                    </div>                                     
+                                    <div class="col-md-6 first mb-4 portfolio-item second" style="position: absolute; left: 436px; top: 0px;"> 
+                                        <div class="position-relative overflow-hidden mb-2"> 
+                                            <img class="img-fluid w-100" src="./file/portfolio-2.jpg" alt="">
+                                            <div class="portfolio-btn d-flex align-items-center justify-content-center"> <a href="http://127.0.0.1:8000/static/img/portfolio-2.jpg" data-lightbox="portfolio"> <i class="bi fa-plus text-light"></i> </a>
+                                            </div>                                             
+                                        </div>                                         
+                                    </div>                                     
+                                    <div class="col-md-6 first mb-4 portfolio-item second" style="position: absolute; left: 0px; top: 341px;"> 
+                                        <div class="position-relative overflow-hidden mb-2"> 
+                                            <img class="img-fluid w-100" src="./file/portfolio-3.jpg" alt="">
+                                            <div class="portfolio-btn d-flex align-items-center justify-content-center"> <a href="http://127.0.0.1:8000/static/img/portfolio-3.jpg" data-lightbox="portfolio"> <i class="bi fa-plus text-light"></i> </a>
+                                            </div>                                             
+                                        </div>                                         
+                                    </div>                                     
+                                    <div class="col-md-6 first mb-4 portfolio-item second" style="position: absolute; left: 436px; top: 341px;"> 
+                                        <div class="position-relative overflow-hidden mb-2"> 
+                                            <img class="img-fluid w-100" src="./file/portfolio-4.jpg" alt="">
+                                            <div class="portfolio-btn d-flex align-items-center justify-content-center"> <a href="http://127.0.0.1:8000/static/img/portfolio-4.jpg" data-lightbox="portfolio"> <i class="bi fa-plus text-light"></i> </a>
+                                            </div>                                             
+                                        </div>                                         
+                                    </div>                                     
+                                </div>                                 
+                            </div>                             
+                        </div>                         
+                    </section>                     
+                    <!-- Portfolio End -->                     
+                    <!-- Testimonial Start -->                     
+                    <!-- Testimonial End -->                     
+                    <!-- Contact Start -->                     
+                    <!-- Contact End -->                     
+                    <!-- Footer Start -->                     
+                    <section class="wow fadeIn" data-wow-delay="0.1s" style="visibility: hidden; animation-delay: 0.1s; animation-name: none;"> 
+</section>                     
+                    <!-- Footer End -->                     
+                </div>                 
+            </div>             
+        </div>         
+        <div class="container modal fade" id="page2Modal" tabindex="-1" role="dialog" aria-labelledby="page2ModalLabel" aria-hidden="true">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="profile-section">
+                        <h2>Personal Information</h2>
+                        <ul>
+                            <li>
+                                <strong>Name:</strong> Tovfikur Rahman&nbsp;
+                            </li>
+                            <li>
+                                <strong>Nick Name:</strong> Topu Biswas&nbsp;&nbsp;
+                            </li>
+                            <li><strong>Gender:</strong> Male
+                            </li>
+                            <li>
+                                <strong>Date of Birth:</strong> April 19, 1998
+                            </li>
+                            <li>
+                                <strong>Place of Birth:</strong> Pabna, Bangladesh
+                            </li>
+                            <li>
+                                <strong>Nationality:</strong> Bangladeshi
+                            </li>
+                            <li>
+                                <strong>Ethnicity:</strong> Bengali
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="profile-section">
+                        <h2>Education</h2>
+                        <ul>
+                            <li>
+                                <strong>Highest Level of Education:</strong> Diploma
+                            </li>
+                            <li>
+                                <strong>Schools/Universities Attended:</strong>&nbsp;Feni Computer Institute
+                            </li>
+                            <li>
+                                <strong>Degrees/Certificates Earned:</strong> Diploma in Engineering of Science in Computer Science
+                            </li>
+                            <li><strong>Major/Field of Study:</strong> Computer Science
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="profile-section">
+                        <h2>Interests and Hobbies</h2>
+                        <ul>
+                            <li>Anything</li>
+                            <li>Travel</li>
+                            <li>Reading</li>
+                            <li>Writing new program</li>
+                            <li>Analyze Business</li>
+                            <li>Try to solve any reallife problem</li>
+                        </ul>
+                    </div>
+                    <div class="profile-section">
+                        <h2>Personal Values and Beliefs</h2>
+                        <ul>
+                            <li>Religious Beliefs: Islam</li>
+                            <li>Political Views:I don't know much about history but after I started seeing world, <b>Awami League</b> has done a lot for my country.
+                            </li>
+                            <li>Don't judge people, don't get angry at 
+anything, don't be jealous, don't harm anyone. You try your best, Allah 
+will do what He wills.</li>
+                        </ul>
+                    </div>
+                    <div class="profile-section">
+                        <h2>Contact Information</h2>
+                        <ul>
+                            <li>
+                                <strong>Phone Number:</strong> +88 017 966 933 00
+                            </li>
+                            <li>
+                                <strong>Email Address:</strong>&nbsp;tovfikur@gamil.com
+                            </li>
+                            <li>
+                                <strong>Temporary Address:</strong>&nbsp;R 17, South Banasree, Dhaka
+                            </li>
+                            <li>
+                                <strong>Permanent Address:</strong>&nbsp;Moshjid Para, Sujanagar, Pabna
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="profile-section">
+                        <h2>Personality Traits</h2>
+                        <ul>
+                            <li>Introverted + Extroverted</li>
+                            <li>Creative 90%</li>
+                            <li>Leadership Skills 80%</li>
+                            <li>Team Player 80%</li>
+                            <li>&nbsp;Analytical 50%</li>
+                            <li>Organized 40%</li>
+                        </ul>
+                    </div>
+                    <div class="profile-section">
+                        <h2>Languages Spoken</h2>
+                        <ul>
+                            <li>Bangla (Native)</li>
+                            <li>English ( Operational )</li>
+                            <li>Hindi ( Understand only)</li>
+                        </ul>
+                    </div>
+                    <div class="profile-section">
+                        <h2>Family Background</h2>
+                        <ul>
+                            <li>Family Members : 3</li>
+                            <li>Father, Mother, Li'l sister</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Back to Top -->         <a href="#" class="back-to-top" style="display: none;"><i class="fa fa-angle-double-up"></i></a> 
+        <!-- JavaScript Libraries -->         
+        <script src="./file/jquery-3.4.1.min.js"></script>         
+        <script src="./file/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>         
+        <script src="./file/bootstrap.bundle.min.js"></script>         
+        <script src="./file/wow.min.js"></script>
+        <script src="./file/typed.min.js"></script>
+        <script src="./file/easing.min.js"></script>
+        <script src="./file/waypoints.min.js"></script>
+        <script src="./file/counterup.min.js"></script>
+        <script src="./file/owl.carousel.min.js"></script>
+        <script src="./file/isotope.pkgd.min.js"></script>
+        <script src="./file/lightbox.min.js"></script>
+        <!-- Contact Javascript File -->         
+        <script src="./file/jqBootstrapValidation.min.js"></script>
+        <script src="./file/contact.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <!-- Template Javascript -->         
+        <script src="./file/main.js"></script><style type="text/css" data-typed-js-css="true">
+        .typed-cursor{
+          opacity: 1;
+        }
+        .typed-cursor.typed-cursor--blink{
+          animation: typedjsBlink 0.7s infinite;
+          -webkit-animation: typedjsBlink 0.7s infinite;
+                  animation: typedjsBlink 0.7s infinite;
+        }
+        @keyframes typedjsBlink{
+          50% { opacity: 0.0; }
+        }
+        @-webkit-keyframes typedjsBlink{
+          0% { opacity: 1; }
+          50% { opacity: 0.0; }
+          100% { opacity: 1; }
+        }
+      </style>
+        <style type="text/css" data-typed-js-css="true">.typed-cursor { opacity: 1; } .typed-cursor.typed-cursor--blink { animation: typedjsBlink 0.7s infinite; -webkit-animation: typedjsBlink 0.7s infinite; animation: typedjsBlink 0.7s infinite; } @keyframes typedjsBlink{ 50% {  opacity: 0.0; } } @-webkit-keyframes typedjsBlink{ 0% {  opacity: 1; }  50% {  opacity: 0.0; }  100% {  opacity: 1; } }</style>         
+        <div id="lightboxOverlay" class="lightboxOverlay" style="display: none;"></div>
+        <div id="lightbox" class="lightbox" style="display: none;">
+            <div class="lb-outerContainer">
+                <div class="lb-container">
+                    <img class="lb-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+                    <div class="lb-nav">
+                        <a class="lb-prev" href=""></a>
+                        <a class="lb-next" href=""></a>
+                    </div>
+                    <div class="lb-loader">
+                        <a class="lb-cancel"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="lb-dataContainer">
+                <div class="lb-data">
+                    <div class="lb-details">
+                        <span class="lb-caption"></span>
+                        <span class="lb-number"></span>
+                    </div>
+                    <div class="lb-closeContainer">
+                        <a class="lb-close"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    
+    
+    
+    <script>
+  // Wait for the document to be fully loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get the modal element
+    var modal = document.querySelector('#page2Modal');
+
+    // Add event listener for double click on modal
+    modal.addEventListener('dblclick', function(event) {
+       window.location.reload();
+    });
+  });
+
+</script>
+</body><!-- JavaScript to close modal on double click --><!-- JavaScript to close modal on double click --><!-- JavaScript to close modal on double click --></html>
