@@ -5,10 +5,8 @@
     <met #aeb3b8et="utf-8"> </met>
     <title>Tovfikur Rahman - One of the best Software Engineer and Web Developer</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free Website Template" name="keywords">
-    <meta content="Free Website Template" name="description">
     <!-- Favicon -->
-    <link href="http://127.0.0.1:8000/static/favicon.ico" rel="icon">
+    <link href="./file/favicon.ico" rel="icon">
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
@@ -23,139 +21,172 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="./file/bootstrap.min.css" rel="stylesheet">
     <!-- Template Stylesheet -->
-    <link href="./file/style.css" rel="stylesheet">      
+    <link href="./file/style.css" rel="stylesheet">    
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>   
 
 
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <script id="dataslayerLaunchMonitors">
-        window._satellite = window._satellite || {};
-        window._satellite._monitors = window._satellite._monitors || [];
-        window._satellite._monitors.push({
-        ruleTriggered: function(e) {
+            window._satellite = window._satellite || {};
+            window._satellite._monitors = window._satellite._monitors || [];
+            window._satellite._monitors.push({
+            ruleTriggered: function(e) {
+                window.parent.postMessage(
+                {
+                    type: 'dataslayer_launchruletriggered',
+                    url: window == window.parent ? window.location.href : 'iframe',
+                    data: JSON.parse(JSON.stringify(e.rule)),
+                },
+                '*'
+                );
+            },
+            ruleCompleted: function(e) {
+            // console.log('** dataslayer: Launch rule completed **', e.rule);
+            var rule = JSON.parse(JSON.stringify(e.rule));
+            var sendRule = function() {
+                if (window.dataslayer) {
+                    window.parent.postMessage(
+                        {
+                            type: 'dataslayer_launchrulecompleted',
+                            url: window == window.parent ? window.location.href : 'iframe',
+                            data: rule,
+                        },
+                        '*'
+                    );       
+                    // console.log('** dataslayer: posted rule '+rule+'**'); 
+                } else {
+                    if (document.readyState === 'complete') {
+                        // console.log('** dataslayer: giving up on launch **');
+                        window._dataslayerQueue = window._dataslayerQueue || [];
+                        window._dataslayerQueue.push({
+                        type: 'dataslayer_launchrulecompleted',
+                        url: window == window.parent ? window.location.href : 'iframe',
+                        data: rule,
+                        });
+                        return;
+                    } else {
+                        // console.log('** dataslayer: waiting 250ms to repost rule **');
+                        window.setTimeout(sendRule, 250);
+                    }
+                }
+            }
+            sendRule();
+            if (
+            window._satellite &&
+            window._satellite._container &&
+            window._satellite._container.dataElements
+            ) {
+            var elementNames = Object.keys(
+                window._satellite._container.dataElements
+            ).sort(function(a, b) {
+                var nameA = a.toUpperCase();
+                var nameB = b.toUpperCase();
+
+                if (nameA < nameB) {
+                return -1;
+                } else if (nameA > nameB) {
+                return 1;
+                } else {
+                return 0;
+                }
+            });
+
+            let launchElements = {};
+
+            for (var i = 0; i < elementNames.length; i++) {
+                var newElement = JSON.parse(
+                JSON.stringify(
+                    window._satellite._container.dataElements[elementNames[i]]
+                )
+                );
+        
+                let cleanValue = window._satellite.getVar(elementNames[i]);
+                if (typeof cleanValue === 'function') {
+                cleanValue = '(function)';
+                } else if (
+                typeof cleanValue === 'object' &&
+                typeof cleanValue.then === 'function'
+                ) {
+                cleanValue = '(Promise)';
+                }
+                launchElements[elementNames[i]] = cleanValue;
+                // launchElements.push({
+                //   key: elementNames[i],
+                //   value: cleanValue,
+                //   element: newElement,
+                // });
+            }
+            try {
+                window.parent.postMessage(
+                {
+                    type: 'dataslayer_launchdataelements',
+                    data: 'found',
+                    url: window == window.parent ? window.location.href : 'iframe',
+                    elements: launchElements
+                },
+                '*'
+                );
+            } catch (e) {
+                console.warn(e);
+            }
+        
+            }
+        },
+        ruleConditionFailed: function(e) {
             window.parent.postMessage(
             {
-                type: 'dataslayer_launchruletriggered',
+                type: 'dataslayer_launchrulefailed',
                 url: window == window.parent ? window.location.href : 'iframe',
                 data: JSON.parse(JSON.stringify(e.rule)),
             },
             '*'
             );
         },
-        ruleCompleted: function(e) {
-        // console.log('** dataslayer: Launch rule completed **', e.rule);
-        var rule = JSON.parse(JSON.stringify(e.rule));
-        var sendRule = function() {
-            if (window.dataslayer) {
-                window.parent.postMessage(
-                    {
-                        type: 'dataslayer_launchrulecompleted',
-                        url: window == window.parent ? window.location.href : 'iframe',
-                        data: rule,
-                    },
-                    '*'
-                );       
-                // console.log('** dataslayer: posted rule '+rule+'**'); 
-            } else {
-                if (document.readyState === 'complete') {
-                    // console.log('** dataslayer: giving up on launch **');
-                    window._dataslayerQueue = window._dataslayerQueue || [];
-                    window._dataslayerQueue.push({
-                    type: 'dataslayer_launchrulecompleted',
-                    url: window == window.parent ? window.location.href : 'iframe',
-                    data: rule,
-                    });
-                    return;
-                } else {
-                    // console.log('** dataslayer: waiting 250ms to repost rule **');
-                    window.setTimeout(sendRule, 250);
-                }
-            }
-        }
-        sendRule();
-        if (
-        window._satellite &&
-        window._satellite._container &&
-        window._satellite._container.dataElements
-        ) {
-        var elementNames = Object.keys(
-            window._satellite._container.dataElements
-        ).sort(function(a, b) {
-            var nameA = a.toUpperCase();
-            var nameB = b.toUpperCase();
-
-            if (nameA < nameB) {
-            return -1;
-            } else if (nameA > nameB) {
-            return 1;
-            } else {
-            return 0;
-            }
         });
-
-        let launchElements = {};
-
-        for (var i = 0; i < elementNames.length; i++) {
-            var newElement = JSON.parse(
-            JSON.stringify(
-                window._satellite._container.dataElements[elementNames[i]]
-            )
-            );
-    
-            let cleanValue = window._satellite.getVar(elementNames[i]);
-            if (typeof cleanValue === 'function') {
-            cleanValue = '(function)';
-            } else if (
-            typeof cleanValue === 'object' &&
-            typeof cleanValue.then === 'function'
-            ) {
-            cleanValue = '(Promise)';
-            }
-            launchElements[elementNames[i]] = cleanValue;
-            // launchElements.push({
-            //   key: elementNames[i],
-            //   value: cleanValue,
-            //   element: newElement,
-            // });
-        }
-        try {
-            window.parent.postMessage(
-            {
-                type: 'dataslayer_launchdataelements',
-                data: 'found',
-                url: window == window.parent ? window.location.href : 'iframe',
-                elements: launchElements
-            },
-            '*'
-            );
-        } catch (e) {
-            console.warn(e);
-        }
-    
-        }
-    },
-    ruleConditionFailed: function(e) {
-        window.parent.postMessage(
-        {
-            type: 'dataslayer_launchrulefailed',
-            url: window == window.parent ? window.location.href : 'iframe',
-            data: JSON.parse(JSON.stringify(e.rule)),
-        },
-        '*'
-        );
-    },
-    });
     </script>
+
+    <script>
+        window.onload = function() {
+            document.getElementById("preloader").style.display = "none";
+        };
+
+        window.onload = function() {
+            document.getElementById("preloader").style.display = "none";
+            document.getElementById("main-content").style.display = "block";
+        };
+    </script>
+
+    <style>
+
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 999; /* Ensure preloader is above other content */
+            display: flex; /* Center content horizontally and vertically */
+            justify-content: center;
+            align-items: center;
+        }
+
+        body {
+            display: none;
+        }
+
+    </style>
 </head>
-<body cz-shortcut-listen="true">
 
 
 
-<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
-
+<div id="preloader">
     <dotlottie-player src="https://lottie.host/7f477895-3e8f-43d7-8633-7d7f6340f823/cRHOAbSTyE.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
+</div>
 
 
 
+<body cz-shortcut-listen="true">
     <div class="container"> 
         <div class="row g-5"> 
             <div class="col-lg-4 sticky-lg-top vh-100"> 
